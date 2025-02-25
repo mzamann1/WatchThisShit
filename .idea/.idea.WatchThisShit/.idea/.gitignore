@@ -1,0 +1,61 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/modules.xml
+/contentModel.xml
+/projectSettingsUpdater.xml
+/.idea.WatchThisShit.iml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+
+.env
+
+# Ignore Visual Studio files
+.vscode/
+*.vs/
+*.user
+*.suo
+*.cache
+*.log
+
+# Ignore build outputs
+bin/
+obj/
+out/
+
+# Ignore NuGet packages
+*.nupkg
+*.snupkg
+packages/
+
+# Ignore application settings
+appsettings.json
+appsettings.Development.json
+secrets.json
+
+# Ignore Entity Framework migrations
+Migrations/
+
+# Ignore logs and database files
+logs/
+*.log
+*.ldb
+*.mdf
+*.ldf
+*.sqlite
+*.db
+
+# Ignore Rider / JetBrains files
+.idea/
+*.sln.iml
+*.iml
+
+# Ignore Node.js dependencies (if applicable)
+node_modules/
+npm-debug.log
+yarn-error.log
+
