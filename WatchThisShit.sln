@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchThisShit.API", "WatchThisShit.API\WatchThisShit.API.csproj", "{18DB0F8F-6417-4C10-8DDE-856862DDBEE0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchThisShit.Contracts", "WatchThisShit.Contracts\WatchThisShit.Contracts.csproj", "{04AD0E65-778A-4A10-B3BF-B962A778D7B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchThisShit.Application", "WatchThisShit.Application\WatchThisShit.Application.csproj", "{0E49CCC3-8C1B-45C8-A67B-7D5B26694398}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{18DB0F8F-6417-4C10-8DDE-856862DDBEE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18DB0F8F-6417-4C10-8DDE-856862DDBEE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18DB0F8F-6417-4C10-8DDE-856862DDBEE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18DB0F8F-6417-4C10-8DDE-856862DDBEE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04AD0E65-778A-4A10-B3BF-B962A778D7B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04AD0E65-778A-4A10-B3BF-B962A778D7B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04AD0E65-778A-4A10-B3BF-B962A778D7B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04AD0E65-778A-4A10-B3BF-B962A778D7B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E49CCC3-8C1B-45C8-A67B-7D5B26694398}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E49CCC3-8C1B-45C8-A67B-7D5B26694398}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E49CCC3-8C1B-45C8-A67B-7D5B26694398}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E49CCC3-8C1B-45C8-A67B-7D5B26694398}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
