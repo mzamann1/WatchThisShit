@@ -23,9 +23,8 @@
 *.log
 
 # Ignore build outputs
-**/bin/
-**/obj/
-**/out/
+bin/
+obj/
 
 # Ignore NuGet packages
 *.nupkg
@@ -51,6 +50,7 @@ logs/
 
 # Ignore Rider / JetBrains files
 .idea/
+.idea/*
 *.sln.iml
 *.iml
 
