@@ -1,10 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Dapper;
 using WatchThisShit.Application.Database;
 using WatchThisShit.Application.Models;
+using System.Linq;
+using WatchThisShit.Application.FilterModels;
 
 namespace WatchThisShit.Application.Repositories;
 
@@ -16,7 +14,7 @@ public class MovieRepository(IDbConnectionFactory connectionFactory) : IMovieRep
         using var transaction = connection.BeginTransaction();
         var result = await connection.ExecuteAsync(new CommandDefinition(
             """
-             INSERT INTO Movies (id, title,slug,yearOfRelease)
+             INSERT INTO Movies (id, title, slug, yearofrelease)
              values (@Id, @Title, @Slug, @YearOfRelease)
             """, movie, transaction: transaction, cancellationToken: cancellationToken));
 
@@ -36,27 +34,54 @@ public class MovieRepository(IDbConnectionFactory connectionFactory) : IMovieRep
         return result > 0;
     }
 
-    public async Task<IEnumerable<Movie>> GetAllAsync(CancellationToken cancellationToken = default)
+    public async Task<(IEnumerable<Movie>, int, int, int)> GetAllAsync(PaginationFilter pagination,
+        SortingFilter sorting,
+        CancellationToken cancellationToken = default)
     {
         using var connection = await connectionFactory.CreateConnectionAsync(cancellationToken);
-        var result = await connection.QueryAsync(new CommandDefinition("""
-                                                                       select m.*, string_agg(g.name,',') as genres
-                                                                       from movies m 
-                                                                       left join genres g on m.id = g.movieId
-                                                                       group by m.id
-                                                                       """, cancellationToken: cancellationToken));
 
+        var orderBy = sorting.SortBy?.ToLower() switch
+        {
+            "title" => "title",
+            "year" => "yearofrelease",
+            _ => "title"
+        };
+
+        var direction = sorting.IsDescending ? "DESC" : "ASC";
+        var offset = (pagination.PageNumber - 1) * pagination.PageSize;
+
+        var sql = $"""
+                   WITH MovieData AS (
+                       SELECT m.*, string_agg(g.name, ',') as genres,
+                              COUNT(*) OVER() as TotalCount
+                       FROM movies m 
+                       LEFT JOIN genres g ON m.id = g.movieid
+                       GROUP BY m.id
+                   )
+                   SELECT *
+                   FROM MovieData
+                   ORDER BY {orderBy} {direction}
+                   LIMIT @PageSize OFFSET @Offset
+                   """;
+
+        var result = await connection.QueryAsync(new CommandDefinition(sql,
+            new { PageSize = pagination.PageSize, Offset = offset }, cancellationToken: cancellationToken));
+        var totalCount = (int) (result.FirstOrDefault()?.totalcount ?? 0);
         connection.Close();
-        return result.Select(m => new Movie
+
+        var movies = result.Select(m => new Movie
         {
             Id = m.id,
             Title = m.title,
             YearOfRelease = m.yearofrelease,
-            Genres = Enumerable.ToList(m.genres.Split(","))
+            Genres = Enumerable.ToList(m.genres?.Split(",", StringSplitOptions.RemoveEmptyEntries)) ?? Enumerable.Empty<string>()
         });
+
+        return (movies, totalCount, pagination.PageNumber, pagination.PageSize);
     }
 
-    public async Task<Movie?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<Movie?> GetByIdAsync(Guid id,
+        CancellationToken cancellationToken = default)
     {
         using var connection = await connectionFactory.CreateConnectionAsync(cancellationToken);
         var movie = await connection.QuerySingleOrDefaultAsync<Movie>(
@@ -81,7 +106,8 @@ public class MovieRepository(IDbConnectionFactory connectionFactory) : IMovieRep
         return movie;
     }
 
-    public async Task<Movie?> GetBySlugAsync(string slug, CancellationToken cancellationToken = default)
+    public async Task<Movie?> GetBySlugAsync(string slug,
+        CancellationToken cancellationToken = default)
     {
         using var connection = await connectionFactory.CreateConnectionAsync(cancellationToken);
         var movie = await connection.QuerySingleOrDefaultAsync<Movie>(
@@ -106,7 +132,8 @@ public class MovieRepository(IDbConnectionFactory connectionFactory) : IMovieRep
         return movie;
     }
 
-    public async Task<bool> UpdateAsync(Movie movie, CancellationToken cancellationToken = default)
+    public async Task<bool> UpdateAsync(Movie movie,
+        CancellationToken cancellationToken = default)
     {
         using var connection = await connectionFactory.CreateConnectionAsync(cancellationToken);
 

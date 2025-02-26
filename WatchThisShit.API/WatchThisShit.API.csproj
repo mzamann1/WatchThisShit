@@ -8,13 +8,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.13"/>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2"/>
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\WatchThisShit.Application\WatchThisShit.Application.csproj" />
-      <ProjectReference Include="..\WatchThisShit.Contracts\WatchThisShit.Contracts.csproj" />
     </ItemGroup>
 
     <ItemGroup>

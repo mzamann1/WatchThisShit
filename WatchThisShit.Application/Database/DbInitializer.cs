@@ -32,5 +32,6 @@ public class DbInitializer
                                           name VARCHAR(50) NOT NULL
                                       )
                                       """);
+
     }
 }

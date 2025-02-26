@@ -1,4 +1,5 @@
 using FluentValidation;
+using WatchThisShit.Application.FilterModels;
 using WatchThisShit.Application.Models;
 using WatchThisShit.Application.Repositories;
 
@@ -22,22 +23,26 @@ public class MovieService : IMovieService
         return await _movieRepository.CreateAsync(movie, cancellationToken);
     }
 
-    public async Task<IEnumerable<Movie>> GetAllAsync(CancellationToken cancellationToken = default)
+    public async Task<(IEnumerable<Movie>, int TotalCount, int PageNumber, int PageSize)> GetAllAsync(PaginationFilter pagination, SortingFilter sorting,
+        CancellationToken cancellationToken = default)
     {
-        return await _movieRepository.GetAllAsync(cancellationToken);
+        return await _movieRepository.GetAllAsync(pagination, sorting, cancellationToken);
     }
 
-    public async Task<Movie?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<Movie?> GetByIdAsync(Guid id,
+        CancellationToken cancellationToken = default)
     {
         return await _movieRepository.GetByIdAsync(id, cancellationToken);
     }
 
-    public async Task<Movie?> GetBySlugAsync(string slug, CancellationToken cancellationToken = default)
+    public async Task<Movie?> GetBySlugAsync(string slug,
+        CancellationToken cancellationToken = default)
     {
         return await _movieRepository.GetBySlugAsync(slug, cancellationToken);
     }
 
-    public async Task<Movie?> UpdateAsync(Movie movie, CancellationToken cancellationToken = default)
+    public async Task<Movie?> UpdateAsync(Movie movie,
+        CancellationToken cancellationToken = default)
     {
         await _validator.ValidateAndThrowAsync(movie, cancellationToken);
         var exists = await _movieRepository.ExistsByIdAsync(movie.Id, cancellationToken);
