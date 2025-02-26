@@ -32,8 +32,8 @@ public class MoviesController(IMovieRepository movieRepository) : ControllerBase
     public async Task<IActionResult> GetMovie([FromRoute] string idOrSlug)
     {
         var movie = Guid.TryParse(idOrSlug, out Guid id)
-            ? await movieRepository.GetMovieByIdAsync(id)
-            : await movieRepository.GetMovieBySlugAsync(idOrSlug);
+            ? await movieRepository.GetByIdAsync(id)
+            : await movieRepository.GetBySlugAsync(idOrSlug);
         if (movie == null)
             return NotFound();
         return Ok(movie.ToMovieResponse());

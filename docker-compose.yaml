@@ -1,0 +1,17 @@
+﻿services:
+  
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=yourusername
+      - POSTGRES_PASSWORD=yourpassword
+      - POSTGRES_DB=yourdb
+    ports:
+      - '5432:5432'
+
+  watchthisshit.api:
+    image: watchthisshit.api
+    build:
+      context: .
+      dockerfile: WatchThisShit.API/Dockerfile
