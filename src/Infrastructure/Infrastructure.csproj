@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>WatchThisShit.Infrastructure</RootNamespace>
+    <AssemblyName>WatchThisShit.Infrastructure</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity"/>
+    <PackageReference Include="Dapper"/>
+    <PackageReference Include="Npgsql"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Application\Application.csproj"/>
+  </ItemGroup>
+
+</Project>
