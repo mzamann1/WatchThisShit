@@ -1,0 +1,24 @@
+﻿# For more info on HTTP files go to https://aka.ms/vs/httpfile
+@Web_HostAddress = https://localhost:5001
+
+### Create a Movie
+POST {{Web_HostAddress}}/api/movies
+Content-Type: application/json
+
+{
+  "title": "Inception",
+  "description": "A mind-bending thriller",
+  "releaseYear": 2010
+}
+
+### Get a Movie by ID
+GET {{Web_HostAddress}}/api/movies/{id}
+
+### Get a Movie by Slug
+GET {{Web_HostAddress}}/api/movies/{slug}
+
+### Get All Movies with Pagination
+GET {{Web_HostAddress}}/api/movies?pageNumber=1&pageSize=10&sortBy=title&isDescending=false&searchTerm=action
+
+### Delete a Movie
+DELETE {{Web_HostAddress}}/api/movies/{id}
