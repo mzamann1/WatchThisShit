@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WatchThisShit.API.Mapping;
 using WatchThisShit.Application;
 using WatchThisShit.Application.Database;
 
@@ -29,6 +30,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseMiddleware<ValidationMappingMiddleware>();
 app.MapControllers();
 
 var dbInitializer= app.Services.GetRequiredService<DbInitializer>();
